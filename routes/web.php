@@ -14,3 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/info',function(){
+   phpinfo();
+});
+Route::any('test/hello','Test\TestController@hello');
+Route::any('test/adduser','User\LoginController@adduser');
+Route::any('test/redis1','Test\TestController@redis1');
