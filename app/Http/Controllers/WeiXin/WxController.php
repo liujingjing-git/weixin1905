@@ -7,5 +7,9 @@ use Illuminate\Http\Request;
 
 class WxController extends Controller
 {
-    //
+    /*微信*/
+    public function wechat()
+    {
+        echo '微信开发';
+    }
 }
