@@ -38,9 +38,9 @@ class TestController extends Controller
 	/*百度*/
 	public function baidu()
 	{
-		$url='http://www.qstheory.cn/wp/2019-12/06/c_1125314331.htm';
+		$url="http://www.qstheory.cn/wp/2019-12/06/c_1125314331.htm";
 		$client = new Client();
-		$response = $client->request('GET');
+		$response = $client->request('GET',$url);
 		echo $response->getBody();
 	}
 

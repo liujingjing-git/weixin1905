@@ -10,6 +10,6 @@ class WxController extends Controller
     /*微信*/
     public function wechat()
     {
-        echo '微信开发';
+        echo '微信开发f';/*25.36*/
     }
 }
