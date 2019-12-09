@@ -25,6 +25,9 @@ Route::any('test/redis2','Test\TestController@redis2');
 Route::any('/test/baidu','Test\TestController@baidu');
 
 
+Route::get('/test/xml','Test\TestController@xmlTest');
+
+
 /*微信开发*/
 Route::get('/wx','WeiXin\WxController@wechat');
 /*接收用户的推送事件*/
