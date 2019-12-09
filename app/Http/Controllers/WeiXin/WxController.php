@@ -32,8 +32,9 @@ class WxController extends Controller
     /*接收微信推送事件*/
     public function receiv(){
         $log_file = "wx.log";
-        //将接收到的文件记录到日志文件..
-        $data = date('Y-m-d H:i:s').json_encode($_POST);
+        //将接收到的文件记录到日志文件
+        $xml = file_get_contents("php://input");
+        $data = date('Y-m-d H:i:s').$xml;
         file_put_contents($log_file,$data,FILE_APPEND);
       }
 
