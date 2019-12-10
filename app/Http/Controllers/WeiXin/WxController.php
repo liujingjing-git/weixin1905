@@ -50,7 +50,7 @@ class WxController extends Controller
         $log_file = "wx.log";
         //将接收到的文件记录到日志文件
         $xml_str = file_get_contents("php://input");
-        $data = date('Y-m-d H:i:s').$xml;
+        $data = date('Y-m-d H:i:s').$xml_str;
         file_put_contents($log_file,$data,FILE_APPEND);
 
         //处理xml数据
