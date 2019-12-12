@@ -117,6 +117,7 @@ class WxController extends Controller
         }
     }
     /**
+     * 
      * 获取用户基本信息
      */
     public function getUserInfo($access_token,$openid)
