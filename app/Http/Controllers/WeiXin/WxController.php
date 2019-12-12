@@ -46,9 +46,7 @@ class WxController extends Controller
         }
     }
 
-/**
-     * 接收微信推送事件
-     */
+/*接收微信推送事件*/
     public function receiv()
     {
         $log_file = "wx.log";       // public
