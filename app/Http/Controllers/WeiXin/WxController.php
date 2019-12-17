@@ -106,10 +106,8 @@ class WxController extends Controller
                 echo $xml;
             }
         }elseif($event=='CLICK'){  //菜单点击事件
-            echo "CLICK CLICK";
-
-            //如果是获取天气
-            if($xml_obj->EventKey=='weather'){
+            //获取天气
+            if($xml_obj->EventKey=='weather'){ 
                 $response_xml = "<xml>
                             <ToUserName><![CDATA['.$openid.']]></ToUserName>
                             <FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName>
