@@ -106,14 +106,28 @@ class WxController extends Controller
                 echo $xml;
             }
         }elseif($event=='CLICK'){  //菜单点击事件
-            //获取天气
+
             if($xml_obj->EventKey=='weather'){ 
+                //获取天气
+            
+            
+                //请求第三方接口 获取天气
+                $weather_api = 'https://free-api.heweather.net/s6/weather/now?location=beijing&key=c3b1cbca3b03464e87ff970f9a863238';
+                $weather_info = file_get_contents($weather_api);
+                $weather_info_arr = json_decode($weather_info,true);
+                // echo '<pre>';print_r($weather_info_arr);echo '</pre>';die;
+                $cond_txt = $weather_info_arr['HeWeather6'][0]['now']['cond_txt'];
+                $tmp = $weather_info_arr['HeWeather6'][0]['now']['tmp'];
+                $wind_dir = $weather_info_arr['HeWeather6'][0]['now']['wind_dir'];
+
+                $msg = $cond_txt.'温度: '.$tmp .'风向: '.$wind_dir;
+
                 $response_xml = '<xml>
                             <ToUserName><![CDATA['.$openid.']]></ToUserName>
                             <FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName>
                             <CreateTime>'.time().'</CreateTime>
                             <MsgType><![CDATA[text]]></MsgType>
-                            <Content><![CDATA['.date('Y-m-d H:i:s').'晴天' .']]></Content>
+                            <Content><![CDATA['.date('Y-m-d H:i:s').$msg .']]></Content>
                         </xml>';
                 echo $response_xml;
             }
@@ -181,9 +195,7 @@ class WxController extends Controller
             echo $response;
         }
     }
-    /**
-     * 获取用户基本信息
-     */
+    /*获取用户基本信息*/
     public function getUserInfo($access_token,$openid)
     {
         $url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$access_token.'&openid='.$openid.'&lang=zh_CN';
