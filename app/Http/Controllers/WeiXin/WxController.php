@@ -64,19 +64,19 @@ class WxController extends Controller
         //处理xml数据
         $xml_obj = simplexml_load_string($xml_str);
         $event = $xml_obj->Event;       // 获取事件类型
+        $openid = $xml_obj->FromUserName;       //获取用户的openid
         if($event=='subscribe'){
-            $openid = $xml_obj->FromUserName;       //获取用户的openid
             //判断用户是否已存在
             $u = WxUserModel::where(['openid'=>$openid])->first();
             if($u){
                 $msg = '欢迎回来';
                 $xml = '<xml>
-  <ToUserName><![CDATA['.$openid.']]></ToUserName>
-  <FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName>
-  <CreateTime>'.time().'</CreateTime>
-  <MsgType><![CDATA[text]]></MsgType>
-  <Content><![CDATA['.$msg.']]></Content>
-</xml>';
+                                <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                                <FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName>
+                                <CreateTime>'.time().'</CreateTime>
+                                <MsgType><![CDATA[text]]></MsgType>
+                                <Content><![CDATA['.$msg.']]></Content>
+                        </xml>';
                 echo $xml;
             }else{
                 //获取用户信息 zcza
@@ -97,13 +97,27 @@ class WxController extends Controller
                 $msg = "谢谢关注";
                 //回复用户关注
                 $xml = '<xml>
-  <ToUserName><![CDATA['.$openid.']]></ToUserName>
-  <FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName>
-  <CreateTime>'.time().'</CreateTime>
-  <MsgType><![CDATA[text]]></MsgType>
-  <Content><![CDATA['.$msg.']]></Content>
-</xml>';
+                            <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                            <FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName>
+                            <CreateTime>'.time().'</CreateTime>
+                            <MsgType><![CDATA[text]]></MsgType>
+                            <Content><![CDATA['.$msg.']]></Content>
+                        </xml>';
                 echo $xml;
+            }
+        }elseif($event=='CLICK'){  //菜单点击事件
+            echo "CLICK CLICK";
+
+            //如果是获取天气
+            if($xml_obj->EventKey=='weather'){
+                $response_xml = "<xml>
+                            <ToUserName><![CDATA['.$openid.']]></ToUserName>
+                            <FromUserName><![CDATA['.$xml_obj->ToUserName.']]></FromUserName>
+                            <CreateTime>'.time().'</CreateTime>
+                            <MsgType><![CDATA[text]]></MsgType>
+                            <Content><![CDATA['.date('Y-m-d H:i:s').'晴天'.']]></Content>
+                        </xml>";
+                echo $response_xml;
             }
         }
         // 判断消息类型
@@ -115,12 +129,12 @@ class WxController extends Controller
         if($msg_type=='text'){
             $content = date('Y-m-d H:i:s') . $xml_obj->Content;
             $response_text = '<xml>
-  <ToUserName><![CDATA['.$touser.']]></ToUserName>
-  <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
-  <CreateTime>'.$time.'</CreateTime>
-  <MsgType><![CDATA[text]]></MsgType>
-  <Content><![CDATA['.$content.']]></Content>
-</xml>';
+                                    <ToUserName><![CDATA['.$touser.']]></ToUserName>
+                                    <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
+                                    <CreateTime>'.$time.'</CreateTime>
+                                    <MsgType><![CDATA[text]]></MsgType>
+                                    <Content><![CDATA['.$content.']]></Content>
+                            </xml>';
             echo $response_text;            // 回复用户消息
             // TODO 消息入库
         }elseif($msg_type=='image'){    // 图片消息
@@ -128,44 +142,44 @@ class WxController extends Controller
             $this->getMedia2($media_id,$msg_type);
             // TODO 回复图片
             $response = '<xml>
-  <ToUserName><![CDATA['.$touser.']]></ToUserName>
-  <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
-  <CreateTime>'.time().'</CreateTime>
-  <MsgType><![CDATA[image]]></MsgType>
-  <Image>
-    <MediaId><![CDATA['.$media_id.']]></MediaId>
-  </Image>
-</xml>';
+                                <ToUserName><![CDATA['.$touser.']]></ToUserName>
+                                <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
+                                <CreateTime>'.time().'</CreateTime>
+                                <MsgType><![CDATA[image]]></MsgType>
+                                <Image>
+                                    <MediaId><![CDATA['.$media_id.']]></MediaId>
+                                </Image>
+                        </xml>';
             echo $response;
         }elseif($msg_type=='voice'){          // 语音消息
             // 下载语音
             $this->getMedia2($media_id,$msg_type);
             // TODO 回复语音
             $response = '<xml>
-  <ToUserName><![CDATA['.$touser.']]></ToUserName>
-  <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
-  <CreateTime>'.time().'</CreateTime>
-  <MsgType><![CDATA[voice]]></MsgType>
-  <Voice>
-    <MediaId><![CDATA['.$media_id.']]></MediaId>
-  </Voice>
-</xml>';
+                                <ToUserName><![CDATA['.$touser.']]></ToUserName>
+                                <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
+                                <CreateTime>'.time().'</CreateTime>
+                                <MsgType><![CDATA[voice]]></MsgType>
+                                <Voice>
+                                    <MediaId><![CDATA['.$media_id.']]></MediaId>
+                                </Voice>
+                        </xml>';
             echo $response;
         }elseif($msg_type=='video'){
             // 下载小视频
             $this->getMedia2($media_id,$msg_type);
             // 回复
             $response = '<xml>
-  <ToUserName><![CDATA['.$touser.']]></ToUserName>
-  <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
-  <CreateTime>'.time().'</CreateTime>
-  <MsgType><![CDATA[video]]></MsgType>
-  <Video>
-    <MediaId><![CDATA['.$media_id.']]></MediaId>
-    <Title><![CDATA[测试]]></Title>
-    <Description><![CDATA[不可描述]]></Description>
-  </Video>
-</xml>';
+                                <ToUserName><![CDATA['.$touser.']]></ToUserName>
+                                <FromUserName><![CDATA['.$fromuser.']]></FromUserName>
+                                <CreateTime>'.time().'</CreateTime>
+                                <MsgType><![CDATA[video]]></MsgType>
+                                <Video>
+                                    <MediaId><![CDATA['.$media_id.']]></MediaId>
+                                    <Title><![CDATA[测试]]></Title>
+                                    <Description><![CDATA[不可描述]]></Description>
+                                </Video>
+                        </xml>';
             echo $response;
         }
     }
@@ -180,9 +194,7 @@ class WxController extends Controller
         $log_file = 'wx_user.log';
         file_put_contents($log_file,$json_str,FILE_APPEND);
     }
-    /**
-     * 获取素材
-     */
+    /*获取素材*/
     public function getMedia()
     {
         $media_id = 'MvV4Gy3hH5uSB4XJyYj1apLi-_2xVPEf4eyfg_CWpiEOjhnmIkQOZ5uvxOW1d-8D';
@@ -221,13 +233,36 @@ class WxController extends Controller
         }
         file_put_contents($save_path,$file_content);
     }
-    /**
-     * 刷新 access_token
-     */
+    /*刷新 access_token*/
     public function flushAccessToken()
     {
         $key = 'wx_access_token';
         Redis::del($key);
         echo $this->getAccessToken();
+    }
+
+    /*创建自定义菜单栏*/
+    public function createMenu(){
+        //穿件自定义菜单栏的地址
+        $url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$this->access_token;
+        $menu = [
+            'button' => [
+                [
+                    'type' => 'click',
+                    'name' => '获取天气',
+                    'key' => 'weather'
+                ]
+            ]
+        ];
+
+        $menu_json = json_encode($menu,JSON_UNESCAPED_UNICODE);
+        $client = new Client();
+        $response = $client->request('POST',$url,[
+            'body' => $menu_json
+        ]);
+
+        echo '<pre>';print_r($menu);echo '</pre>';
+        echo $response->getBody(); //接收微信接口的响应
+        
     }
 }
