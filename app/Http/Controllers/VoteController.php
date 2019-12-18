@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class VoteController extends Controller
 {
@@ -15,7 +16,8 @@ class VoteController extends Controller
         //获取用户信息
         $user_info = $this->getUserInfo($data['access_token'],$data['openid']);    
 
-        //处理业务逻辑
+        //处理业务逻辑  
+        //判断是否已经投过  使用redis  集合 或者 有序集合
         $redis_key = 'vote';
         $number = Redis::incr($redis_key);
         echo '投票成功,当前票数:'.$number;
@@ -36,7 +38,6 @@ class VoteController extends Controller
         if(isset($data['errcode'])){
             die('出错了 40001');  //40001 标识获取用户信息失败
         }
-
         //返回用户消息
         return $data;
     }
