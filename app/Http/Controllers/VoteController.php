@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Redis;
 class VoteController extends Controller
 {
     public function index(){
-        echo '<pre>';print_r($_GET);echo '</pre>';
+        // echo '<pre>';print_r($_GET);echo '</pre>';
 
         $code = $_GET['code'];
         //获取access_token   
@@ -17,10 +17,16 @@ class VoteController extends Controller
         $user_info = $this->getUserInfo($data['access_token'],$data['openid']);    
 
         //处理业务逻辑  
-        //判断是否已经投过  使用redis  集合 或者 有序集合
-        $redis_key = 'vote';
-        $number = Redis::incr($redis_key);
-        echo '投票成功,当前票数:'.$number;
+
+        $openid = $user_info['openid'];
+        $key = 's:vote:zhangsan';
+        Redis::Sadd($key,$openid);
+
+        $members = Redis::Smembers($key);  //获取所有投票人的openid
+        $total = Redis::Scard($key);
+        echo "投票总人数:".$total;
+        echo '<hr>';
+        echo '<pre>';print_r($members);echo '</pre>';
     }
 
     /*根据code获取access_token*/
