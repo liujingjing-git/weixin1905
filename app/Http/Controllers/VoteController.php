@@ -27,6 +27,8 @@ class VoteController extends Controller
         }else{
             Redis::Zadd($key,time(),$openid);
         } 
+
+        $total = Redis::zCard($key);
         $members = Redis::zRange($key,0,-1,true);  //获取所有投票人的openid
         echo '<pre>';print_r($members);echo '</pre>';
         foreach($members as $k=>$v){
