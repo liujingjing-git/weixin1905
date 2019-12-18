@@ -43,3 +43,8 @@ Route::get('/wx/media','WeiXin\WxController@getMedia');
 /*自定义菜单栏*/
 Route::get('/wx/flush/access_token','WeiXin\WxController@flushAccessToken');
 Route::get('/wx/menu','WeiXin\WxController@createMenu');  //创建菜单
+
+
+
+/*微信公众号*/
+Route::get('/vote','VoteController@index');  //微信投票

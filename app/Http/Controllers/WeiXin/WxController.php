@@ -253,7 +253,10 @@ class WxController extends Controller
 
     /*创建自定义菜单栏*/
     public function createMenu(){
-        //穿件自定义菜单栏的地址
+        $url = 'http://1905liujingjing.comcto.com/vote';
+        $redirect_uri = urlencode($url);   //授权后跳转页面
+
+        //穿件自定义菜单栏的接口地址
         $url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$this->access_token;
         $menu = [
             'button' => [
@@ -261,6 +264,11 @@ class WxController extends Controller
                     'type' => 'click',
                     'name' => '获取天气',
                     'key' => 'weather'
+                ],
+                [
+                    'type' => 'view',  
+                    'name' => '投票',
+                    'url'  => 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx09d1d54ef09170a9&redirect_uri='.$redirect_uri.'&response_type=code&scope=snsapi_userinfostate=ABCD1905#wechat_redirect'
                 ]
             ]
         ];
