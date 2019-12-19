@@ -47,7 +47,7 @@ class VoteController extends Controller
             
             $u_k = 'h:u:'.$k;
             $u = Redis::hGetAll($u_k);
-            echo $u['nickname'].'<img src="'.$u['headimgurl'].'">';echo '</br>';
+            echo '<img src="'.$u['headimgurl'].'">';echo '</br>';
         }
     }
 
