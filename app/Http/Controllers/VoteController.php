@@ -43,7 +43,7 @@ class VoteController extends Controller
         foreach($members as $k=>$v){            
             $u_k = 'h:u:'.$k;
             $u = Redis::hGetAll($u_k);
-            echo '<img src="'.$u['headimgurl'].'">';echo '</br>';
+            echo '<img src="'.$u['headimgurl'].'">';
         }
     }
 
