@@ -29,11 +29,12 @@ Route::any('test/adduser','User\LoginController@adduser');
 Route::any('test/redis1','Test\TestController@redis1');
 Route::any('test/redis2','Test\TestController@redis2');
 Route::any('/test/baidu','Test\TestController@baidu');
-
-
 Route::get('/test/xml','Test\TestController@xmlTest');
 
 Route::get('/wx/test','WeiXin\WxController@test');
+
+Route::get('/dev/redis/del','VoteController@delKey');
+
 /*微信开发*/
 Route::get('/wx','WeiXin\WxController@wechat');
 /*接收用户的推送事件*/
