@@ -44,13 +44,10 @@ class VoteController extends Controller
         echo '<pre>';print_r($members);echo '</pre>';echo '<hr>';
         foreach($members as $k=>$v){
             echo "用户:".$k.'投票时间:'.date('Y-m-d H:i:s',$v);echo "<br>";
+            
             $u_k = 'h:u:'.$k;
-            // $u = Redis::hgetAll($u_k);
-            echo 'hash key:'.$u_k;echo '<br>';
-            // $u = Redis::hMget($u_k,['openid','nickname','sex','headimgurl']);
             $u = Redis::hGetAll($u_k);
-            // echo '<pre>';print_r($u);echo '</pre>';echo '<hr>';die;
-            echo '<img src="'.$u['headimgurl'].'">';echo '</br>';
+            echo $u['nickname'].'<img src="'.$u['headimgurl'].'">';echo '</br>';
         }
     }
 
