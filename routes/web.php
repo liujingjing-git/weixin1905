@@ -11,15 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    // $file_name = "abc.mp3";
-    // $info = pathinfo($file_name);
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-    // echo $file_name.'文件扩展名为 00: ' .pathinfo($file_name)['extension'];die;
-    // echo '<pre>';print_r($info);echo '</pre>';die;
-
-    return view('welcome');
-});
+Route::get('/','Index\IndexController@index');  //网站首页
 
 Route::get('/info',function(){
    phpinfo();
