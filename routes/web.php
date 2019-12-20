@@ -51,5 +51,5 @@ Route::get('/wx/menu','WeiXin\WxController@createMenu');  //创建菜单
 Route::get('/vote','VoteController@index');  //微信投票
 
 
-Route::get('/','IndexController@index');  
+Route::get('/','Index\IndexController@index');  
 
