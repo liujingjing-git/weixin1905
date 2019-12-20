@@ -11,15 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    // $file_name = "abc.mp3";
-    // $info = pathinfo($file_name);
+// Route::get('/', function () {
+//     // $file_name = "abc.mp3";
+//     // $info = pathinfo($file_name);
 
-    // echo $file_name.'文件扩展名为 00: ' .pathinfo($file_name)['extension'];die;
-    // echo '<pre>';print_r($info);echo '</pre>';die;
+//     // echo $file_name.'文件扩展名为 00: ' .pathinfo($file_name)['extension'];die;
+//     // echo '<pre>';print_r($info);echo '</pre>';die;
 
-    return view('welcome');
-});
+//     return view('welcome');
+// });
 
 Route::get('/info',function(){
    phpinfo();
@@ -49,3 +49,7 @@ Route::get('/wx/menu','WeiXin\WxController@createMenu');  //创建菜单
 
 /*微信公众号*/
 Route::get('/vote','VoteController@index');  //微信投票
+
+
+Route::get('/','IndexController@index');  
+
