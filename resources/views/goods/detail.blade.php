@@ -369,11 +369,12 @@
 				<img src="/storage/{{$goods->img}}" alt="">
 				<h5>Fashion Men's</h5>
 				<div class="price">$20 <span>$28</span></div>
+				{!!$goods->desc!!}   <!--显示简介-->
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam eaque in non delectus, error iste veniam commodi mollitia, officia possimus, repellendus maiores doloribus provident. Itaque, ab perferendis nemo tempore! Accusamus</p>
-				<button type="button" class="btn button-default">ADD TO CART</button>
+  				<button type="button" class="btn button-default">ADD TO CART</button>
 			</div>
 			<div class="review">
-					<h5>1 reviews</h5>
+				  	<h5>1 reviews</h5>
 					<div class="review-details">
 						<div class="row">
 							<div class="col s3">

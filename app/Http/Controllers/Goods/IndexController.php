@@ -18,6 +18,7 @@ class IndexController extends Controller
         $data = [
             'goods' => $goods
         ];
+        // dump($data);
         return view('goods.detail',$data);
     }
 }
